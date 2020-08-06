@@ -1,6 +1,7 @@
 package com.oocl.todolist.service;
 
 import com.oocl.todolist.dao.TodoDao;
+import com.oocl.todolist.exception.GlobalException;
 import com.oocl.todolist.model.Todo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,6 +14,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -36,6 +38,7 @@ class TodoServiceTest {
                 todoList.get(0),
                 todoList.get(1)));
         when(todoDao.save(any(Todo.class))).thenReturn(todoList.get(0));
+        when(todoDao.findById(1)).thenReturn(Optional.of(todoList.get(0)));
     }
 
     @Test
@@ -56,5 +59,16 @@ class TodoServiceTest {
 
         //then
         assertEquals(todo, newTodo);
+    }
+
+    @Test
+    void should_return_todo_when_update_todo_given_todo_and_id() throws GlobalException {
+        //given
+        Integer id = 1;
+        Todo todo = new Todo(1, "lcw", false);
+        //when
+        Todo updatedTodo = todoService.updateTodo(id, todo);
+        //then
+        assertEquals(todo, updatedTodo);
     }
 }
