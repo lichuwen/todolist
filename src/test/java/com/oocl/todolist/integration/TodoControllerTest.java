@@ -8,12 +8,15 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Arrays;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -57,5 +60,24 @@ public class TodoControllerTest {
                 .andExpect(jsonPath("$[0].status").value(false))
                 .andExpect(jsonPath("$[1].text").value("emon"))
                 .andExpect(jsonPath("$[1].status").value(false));
+    }
+
+    @Test
+    void should_add_todo_when_hit_post_todo_endpoint_given_todo() throws Exception {
+        //given
+        String employeeInfo = "{\n" +
+                "            \"text\": \"lcw\",\n" +
+                "            \"status\": false\n" +
+                "        },";
+
+        //when
+        mockMvc.perform(post("/todos").contentType(MediaType.APPLICATION_JSON).content(employeeInfo))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.text").value("lcw"))
+                .andExpect(jsonPath("$.status").value(false));
+        List<Todo> todos = todoDao.findAll();
+        assertEquals(5, todos.size());
+        assertEquals("lcw", todos.get(4).getText());
+        assertEquals(false, todos.get(4).getStatus());
     }
 }
