@@ -1,6 +1,7 @@
 package com.oocl.todolist.controller;
 
 import com.oocl.todolist.dao.TodoDao;
+import com.oocl.todolist.exception.GlobalException;
 import com.oocl.todolist.model.Todo;
 import com.oocl.todolist.service.TodoService;
 import org.springframework.http.HttpStatus;
@@ -27,5 +28,12 @@ public class TodoController {
     @ResponseStatus(HttpStatus.CREATED)
     public Todo getTodo(@RequestBody Todo todo) {
         return todoService.addTodo(todo);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public String deleteEmployee(@PathVariable Integer id) throws GlobalException {
+        todoService.deleteTodo(id);
+        return "success";
     }
 }

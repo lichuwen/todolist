@@ -15,8 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -79,5 +78,16 @@ public class TodoControllerTest {
         assertEquals(5, todos.size());
         assertEquals("lcw", todos.get(4).getText());
         assertEquals(false, todos.get(4).getStatus());
+    }
+
+    @Test
+    void should_return_null_when_hit_delete_endpoint_given_todo_id() throws Exception {
+        //given
+        Todo todo = todoDao.save(todoList.get(0));
+
+        //when
+        mockMvc.perform(delete("/todos/" + todo.getId()))
+                .andExpect(status().isAccepted());
+
     }
 }
