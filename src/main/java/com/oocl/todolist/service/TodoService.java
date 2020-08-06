@@ -14,11 +14,9 @@ import java.util.Optional;
 @Service
 public class TodoService {
     private final TodoDao todoDao;
-    private final Todo todo;
 
-    public TodoService(TodoDao todoDao, Todo todo) {
+    public TodoService(TodoDao todoDao) {
         this.todoDao = todoDao;
-        this.todo = todo;
     }
 
     public List<Todo> findALl() {

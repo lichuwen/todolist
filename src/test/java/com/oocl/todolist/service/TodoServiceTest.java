@@ -34,7 +34,7 @@ class TodoServiceTest {
     @BeforeEach
     public void init() {
         TodoDao todoDao = Mockito.mock(TodoDao.class);
-        this.todoService = new TodoService(todoDao,todo);
+        this.todoService = new TodoService(todoDao);
         when(todoDao.findAll()).thenReturn(Arrays.asList(
                 todoList.get(0),
                 todoList.get(1)));
