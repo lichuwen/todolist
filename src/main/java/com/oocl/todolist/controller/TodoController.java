@@ -1,6 +1,5 @@
 package com.oocl.todolist.controller;
 
-import com.oocl.todolist.dao.TodoDao;
 import com.oocl.todolist.exception.GlobalException;
 import com.oocl.todolist.model.Todo;
 import com.oocl.todolist.service.TodoService;
