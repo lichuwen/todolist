@@ -73,4 +73,12 @@ class TodoServiceTest {
         assertEquals(todo, updatedTodo);
     }
 
+    @Test
+    void should_delete_todo_when_delete_given_todo_id() throws GlobalException {
+        //given
+        Integer id = 1;
+
+        //when
+        assertDoesNotThrow(() -> todoService.deleteTodo(id));
+    }
 }
