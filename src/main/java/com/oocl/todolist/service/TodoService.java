@@ -40,4 +40,12 @@ public class TodoService {
         }
     }
 
+    public void deleteTodo(Integer id) throws GlobalException {
+        Optional<Todo> todo = todoDao.findById(id);
+        if (todo.isPresent()) {
+            todoDao.deleteById(id);
+        } else {
+            throw new GlobalException(ResultEnum.DATA_NOT_FOUND.getMessage());
+        }
+    }
 }
