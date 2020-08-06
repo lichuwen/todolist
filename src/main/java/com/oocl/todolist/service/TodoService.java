@@ -21,4 +21,8 @@ public class TodoService {
         return this.todoDao.findAll();
     }
 
+    public Todo addTodo(Todo todo) {
+        return todoDao.save(todo);
+    }
+
 }

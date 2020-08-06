@@ -15,6 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 class TodoServiceTest {
@@ -24,7 +25,7 @@ class TodoServiceTest {
 
     private final List<Todo> todoList = Arrays.asList(
             new Todo(1, "karen", false),
-            new Todo(2, "hovees", true)
+            new Todo(2, "lichwuen", true)
     );
 
     @BeforeEach
@@ -34,6 +35,7 @@ class TodoServiceTest {
         when(todoDao.findAll()).thenReturn(Arrays.asList(
                 todoList.get(0),
                 todoList.get(1)));
+        when(todoDao.save(any(Todo.class))).thenReturn(todoList.get(0));
     }
 
     @Test
@@ -42,5 +44,17 @@ class TodoServiceTest {
         List<Todo> todos = todoService.findALl();
         //then
         assertEquals(todoList, todos);
+    }
+
+    @Test
+    void should_add_a_todo_when_add_new_todo_given_todo() {
+        //given
+        Todo todo = new Todo(1, "karen", false);
+
+        //when
+        Todo newTodo = todoService.addTodo(todo);
+
+        //then
+        assertEquals(todo, newTodo);
     }
 }
