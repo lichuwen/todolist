@@ -90,4 +90,23 @@ public class TodoControllerTest {
                 .andExpect(status().isAccepted());
 
     }
+
+    @Test
+    void should_return_todo_when_hit_update_todo_endpoint_given_todo_id_and_todo() throws Exception {
+        //given
+        Todo todo = todoDao.save(todoList.get(0));
+        String todoInfo = "{\n" +
+                "            \"id\": " + todo.getId() + ",\n" +
+                "            \"text\": \"lcw\",\n" +
+                "            \"status\": false\n" +
+                "        },";
+
+        //when
+        mockMvc.perform(put("/todos/" + todo.getId()).contentType(MediaType.APPLICATION_JSON).content(todoInfo))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(todo.getId()))
+                .andExpect(jsonPath("$.text").value("lcw"))
+                .andExpect(jsonPath("$.status").value(false));
+    }
+
 }

@@ -30,9 +30,14 @@ public class TodoController {
         return todoService.addTodo(todo);
     }
 
+    @PutMapping("/{id}")
+    public Todo updateTodo(@PathVariable Integer id, @RequestBody Todo todo) throws GlobalException {
+        return todoService.updateTodo(id, todo);
+    }
+
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public String deleteEmployee(@PathVariable Integer id) throws GlobalException {
+    public String deleteTodo(@PathVariable Integer id) throws GlobalException {
         todoService.deleteTodo(id);
         return "success";
     }
